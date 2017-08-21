@@ -11,8 +11,8 @@
   "bugs": {
     "url": "https://github.com/mpab/DroneVoiceControl/src/Lambda"
   },
+  "homepage": "https://github.com/mpab/DroneVoiceControl/src/Lambda",
   "dependencies": {
-    "pubnub": "^4.14.0"
-  },
-  "homepage": "https://github.com/mpab/DroneVoiceControl/src/Lambda"
+    "pubnub": "^4.15.0"
+  }
 }
