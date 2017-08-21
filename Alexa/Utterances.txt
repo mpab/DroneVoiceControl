@@ -1,0 +1,26 @@
+SetupIntent initiate
+SetupIntent start
+SetupIntent wake up
+SetupIntent power on
+
+TakeoffIntent takeoff
+TakeoffIntent fly the drone
+TakeoffIntent fly drone
+
+LandIntent land the drone
+LandIntent land drone
+LandIntent drone land 
+LandIntent land
+
+ShutdownIntent power off
+ShutdownIntent power down
+ShutdownIntent shutdown
+ShutdownIntent kill
+ShutdownIntent sleep
+
+AboutIntent who developed this skill
+AboutIntent tell me about the developer
+AboutIntent tell me about the author
+AboutIntent give me information about the developer
+AboutIntent who is the author
+AboutIntent who is the developer

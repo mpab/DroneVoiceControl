@@ -1,0 +1,18 @@
+{
+  "name": "droneControl",
+  "version": "0.0.1",
+  "description": "Amazon Echo drone Alexa to PubNub bridge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Alderson",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/mpab/DroneVoiceControl/src/Lambda"
+  },
+  "dependencies": {
+    "pubnub": "^4.14.0"
+  },
+  "homepage": "https://github.com/mpab/DroneVoiceControl/src/Lambda"
+}

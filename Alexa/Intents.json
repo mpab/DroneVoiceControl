@@ -1,0 +1,24 @@
+{
+  "intents": [
+    {
+      "intent": "SetupIntent",
+      "slots": []
+    },
+    {
+      "intent": "TakeoffIntent",
+      "slots": []
+    },
+   {
+      "intent": "LandIntent",
+      "slots": []
+    },
+   {
+      "intent": "ShutdownIntent",
+      "slots": []
+    },
+    {
+      "intent": "AboutIntent",
+      "slots": []
+    }
+  ]
+}
