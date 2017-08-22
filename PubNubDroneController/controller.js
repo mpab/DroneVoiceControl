@@ -22,6 +22,11 @@ drone.connect(function () {
     })
 })
 
+function cooldown() {
+  setTimeout(function () {
+  }, STEPS * 20);
+}
+
 pubnub.addListener({
     message: function(message) {
         switch (message.message.command) {
@@ -47,6 +52,7 @@ pubnub.addListener({
             case "shutdown":
                 console.log('drone:', message.message.command);
                 drone.land();
+                cooldown();
                 process.exit();
                 break;
 
