@@ -11,14 +11,9 @@ var pubnub = new PubNub({
     subscribe_key : "sub-c-4e681cea-8380-11e7-8979-5e3a640e5579"
 });
 
-console.log("pubnub complete")
-pubnub.time(function(status, response) {
-    if (status.error) {
-        // handle error if something went wrong based on the status object
-    } else {
-        console.log(response.timetoken);
-    }
-})
+const droneChannel = 'drone_channel'
+
+console.log("pubnub object created")
 
 // --------------- Helpers that build all of the responses -----------------------
 
@@ -88,8 +83,6 @@ function droneSetup(intent, session, callback) {
     const shouldEndSession = false;
     let speechOutput = "Drone setup complete.";
 
-    console.log(pubnub.get_version());
-
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
@@ -97,8 +90,6 @@ function droneTakeoff(intent, session, callback) {
     const cardTitle = intent.name;
     const shouldEndSession = false;
     let speechOutput = "Drone has taken off.";
-
-    console.log(pubnub.get_version());
 
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
@@ -108,8 +99,6 @@ function droneLand(intent, session, callback) {
     const shouldEndSession = false;
     let speechOutput = "Drone has landed.";
 
-    console.log(pubnub.get_version());
-
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
@@ -118,8 +107,6 @@ function droneShutdown(intent, session, callback) {
     let repromptText = '';
     const shouldEndSession = true;
     let speechOutput = "Drone has been shutdown. Exiting skill.";
-
-    console.log(pubnub.get_version());
 
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }

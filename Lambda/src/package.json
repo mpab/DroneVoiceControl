@@ -6,13 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpab/DroneVoiceControl.git"
+  },
   "author": "Michael Alderson",
   "license": "WTFPL",
   "bugs": {
     "url": "https://github.com/mpab/DroneVoiceControl/src/Lambda"
   },
-  "homepage": "https://github.com/mpab/DroneVoiceControl/src/Lambda",
+  "homepage": "https://github.com/mpab/DroneVoiceControl/README.md",
   "dependencies": {
-    "pubnub": "^4.15.0"
+    "pubnub": "^4.15.1"
   }
 }
