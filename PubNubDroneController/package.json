@@ -1,0 +1,22 @@
+{
+  "name": "PubNubDroneController",
+  "version": "0.0.1",
+  "description": "PubNub to Parrot bluetooth controller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpab/DroneVoiceControl.git"
+  },
+  "author": "Michael Alderson",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/mpab/DroneVoiceControl/PubNubDroneController"
+  },
+  "homepage": "https://github.com/mpab/DroneVoiceControl/README.md",
+  "dependencies": {
+    "pubnub": "^4.14.0"
+  }
+}
