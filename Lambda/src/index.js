@@ -3,15 +3,14 @@
 
 'use strict';
 
-var PubNub = require('pubnub')
+const droneChannel = 'drone_channel'
 
+const PubNub = require('pubnub')
 var pubnub = new PubNub({
     ssl           : true,  // <- enable TLS Tunneling over TCP 
-    publish_key   : "pub-c-cb417719-13c2-493c-800e-b45315fdf059",
-    subscribe_key : "sub-c-4e681cea-8380-11e7-8979-5e3a640e5579"
+    publishKey   : "pub-c-cb417719-13c2-493c-800e-b45315fdf059",
+    subscribeKey : "sub-c-4e681cea-8380-11e7-8979-5e3a640e5579"
 });
-
-const droneChannel = 'drone_channel'
 
 console.log("pubnub object created")
 
@@ -78,54 +77,166 @@ function about(intent, session, callback) {
 }
 
 // --------------- Drone control functions -----------------------
+
+// TODO
+// Handle non-response (no listener)
+// Create common drone control function instead of copy/paste (seems not to work)
+
 function droneSetup(intent, session, callback) {
+    console.log("drone command: setup")
+
     const cardTitle = intent.name;
     const shouldEndSession = false;
     let speechOutput = "Drone setup complete.";
 
-    callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+    //callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+
+    var commandMessage = {
+        "command" : "setup",
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            console.log("ERROR drone command: setup - publishing failed");
+            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+        } else {
+            console.log("drone command: setup - publishing succeeded", response);
+            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
 }
 
 function droneTakeoff(intent, session, callback) {
+    console.log("drone command: takeoff")
+
     const cardTitle = intent.name;
     const shouldEndSession = false;
     let speechOutput = "Drone has taken off.";
 
-    callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+    var commandMessage = {
+        "command" : "takeoff",
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            console.log("ERROR drone command: takeoff - publishing failed");
+            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+        } else {
+            console.log("drone command: takeoff - publishing succeeded", response);
+            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
+
 }
 
 function droneLand(intent, session, callback) {
+    console.log("drone command: land")
+
     const cardTitle = intent.name;
     const shouldEndSession = false;
     let speechOutput = "Drone has landed.";
 
-    callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+    var commandMessage = {
+        "command" : "land",
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            console.log("ERROR drone command: land - publishing failed");
+            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+        } else {
+            console.log("drone command: land - publishing succeeded", response);
+            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
 }
 
 function droneShutdown(intent, session, callback) {
+    
+    console.log("drone command: shutdown")
+
     const cardTitle = intent.name;
     let repromptText = '';
     const shouldEndSession = true;
     let speechOutput = "Drone has been shutdown. Exiting skill.";
 
-    callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+    var commandMessage = {
+        "command" : "shutdown",
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            console.log("ERROR drone command: shutdown - publishing failed");
+            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+        } else {
+            console.log("drone command: shutdown - publishing succeeded", response);
+            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
 }
 
+function droneCommand(command, cardTitle, speechOutput, shouldEndSession) {
+    
+    callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+    
+    /*
 
+    var commandMessage = {
+        "command" : command,
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            //callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+            console.log( command + ": FAILED!", e);
+        } else {
+            console.log( command + ": SUCCESS!", e );
+            //callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
+
+    */
+}
+         
 // --------------- Events -----------------------
 
 /**
  * Called when the session starts.
  */
 function onSessionStarted(sessionStartedRequest, session) {
-    console.log(`onSessionStarted requestId=${sessionStartedRequest.requestId}, sessionId=${session.sessionId}`);
+    //console.log(`onSessionStarted requestId=${sessionStartedRequest.requestId}, sessionId=${session.sessionId}`);
 }
 
 /**
  * Called when the user launches the skill without specifying what they want.
  */
 function onLaunch(launchRequest, session, callback) {
-    console.log(`onLaunch requestId=${launchRequest.requestId}, sessionId=${session.sessionId}`);
+    //console.log(`onLaunch requestId=${launchRequest.requestId}, sessionId=${session.sessionId}`);
 
     // Dispatch to your skill's launch.
     getWelcomeResponse(callback);
@@ -135,7 +246,7 @@ function onLaunch(launchRequest, session, callback) {
  * Called when the user specifies an intent for this skill.
  */
 function onIntent(intentRequest, session, callback) {
-    console.log(`onIntent requestId=${intentRequest.requestId}, sessionId=${session.sessionId}`);
+    //console.log(`onIntent requestId=${intentRequest.requestId}, sessionId=${session.sessionId}`);
 
     const intent = intentRequest.intent;
     const intentName = intentRequest.intent.name;
@@ -165,7 +276,7 @@ function onIntent(intentRequest, session, callback) {
  * Is not called when the skill returns shouldEndSession=true.
  */
 function onSessionEnded(sessionEndedRequest, session) {
-    console.log(`onSessionEnded requestId=${sessionEndedRequest.requestId}, sessionId=${session.sessionId}`);
+    //console.log(`onSessionEnded requestId=${sessionEndedRequest.requestId}, sessionId=${session.sessionId}`);
     // Add cleanup logic here
 }
 
@@ -176,7 +287,7 @@ function onSessionEnded(sessionEndedRequest, session) {
 // etc.) The JSON body of the request is provided in the event parameter.
 exports.handler = (event, context, callback) => {
     try {
-        console.log(`event.session.application.applicationId=${event.session.application.applicationId}`);
+        //console.log(`event.session.application.applicationId=${event.session.application.applicationId}`);
 
         /**
          * Uncomment this if statement and populate with your skill's application ID to
