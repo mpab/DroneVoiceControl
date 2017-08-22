@@ -8,11 +8,27 @@
       "intent": "TakeoffIntent",
       "slots": []
     },
-   {
+    {
       "intent": "LandIntent",
       "slots": []
     },
-   {
+    {
+      "intent": "ForwardIntent",
+      "slots": []
+    },
+    {
+      "intent": "BackwardIntent",
+      "slots": []
+    },
+    {
+      "intent": "LeftIntent",
+      "slots": []
+    },
+    {
+      "intent": "RightIntent",
+      "slots": []
+    },
+    {
       "intent": "ShutdownIntent",
       "slots": []
     },

@@ -12,6 +12,22 @@ LandIntent land drone
 LandIntent drone land 
 LandIntent land
 
+ForwardIntent forward
+ForwardIntent move forward
+ForwardIntent go forward
+
+BackwardIntent backward
+BackwardIntent move backward
+BackwardIntent go backward
+
+LeftIntent left
+LeftIntent move left
+LeftIntent go left
+
+RightIntent right
+RightIntent move right
+RightIntent go right
+
 ShutdownIntent power off
 ShutdownIntent power down
 ShutdownIntent shutdown

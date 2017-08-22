@@ -166,6 +166,114 @@ function droneLand(intent, session, callback) {
     });
 }
 
+function droneForward(intent, session, callback) {
+    console.log("drone command: forward")
+
+    const cardTitle = intent.name;
+    const shouldEndSession = false;
+    let speechOutput = "Drone has moved forward.";
+
+    var commandMessage = {
+        "command" : "forward",
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            console.log("ERROR drone command: forward - publishing failed");
+            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+        } else {
+            console.log("drone command: forward - publishing succeeded", response);
+            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
+}
+
+function droneBackward(intent, session, callback) {
+    console.log("drone command: backward")
+
+    const cardTitle = intent.name;
+    const shouldEndSession = false;
+    let speechOutput = "Drone has moved backward.";
+
+    var commandMessage = {
+        "command" : "backward",
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            console.log("ERROR drone command: backward - publishing failed");
+            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+        } else {
+            console.log("drone command: backward - publishing succeeded", response);
+            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
+}
+
+function droneLeft(intent, session, callback) {
+    console.log("drone command: left")
+
+    const cardTitle = intent.name;
+    const shouldEndSession = false;
+    let speechOutput = "Drone has moved left.";
+
+    var commandMessage = {
+        "command" : "left",
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            console.log("ERROR drone command: left - publishing failed");
+            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+        } else {
+            console.log("drone command: left - publishing succeeded", response);
+            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
+}
+
+function droneRight(intent, session, callback) {
+    console.log("drone command: right")
+
+    const cardTitle = intent.name;
+    const shouldEndSession = false;
+    let speechOutput = "Drone has moved right.";
+
+    var commandMessage = {
+        "command" : "right",
+    };
+
+    pubnub.publish(
+    {
+        channel: droneChannel,
+        message: commandMessage
+    },
+    function(status, response) {
+        if (status.error) {
+            console.log("ERROR drone command: right - publishing failed");
+            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
+        } else {
+            console.log("drone command: right - publishing succeeded", response);
+            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
+        }
+    });
+}
+
 function droneShutdown(intent, session, callback) {
     
     console.log("drone command: shutdown")
@@ -194,6 +302,8 @@ function droneShutdown(intent, session, callback) {
         }
     });
 }
+
+
 
 function droneCommand(command, cardTitle, speechOutput, shouldEndSession) {
     
@@ -260,6 +370,14 @@ function onIntent(intentRequest, session, callback) {
         droneLand(intent, session, callback);
     } else if (intentName === 'ShutdownIntent') {
         droneShutdown(intent, session, callback);
+    } else if (intentName === 'ForwardIntent') {
+        droneForward(intent, session, callback);
+    } else if (intentName === 'BackwardIntent') {
+        droneBackward(intent, session, callback);
+    } else if (intentName === 'LeftIntent') {
+        droneLeft(intent, session, callback);
+    } else if (intentName === 'RightIntent') {
+        droneRight(intent, session, callback);
     } else if (intentName === 'AboutIntent') {
         about(intent, session, callback);
     } else if (intentName === 'AMAZON.HelpIntent') {
