@@ -70,6 +70,26 @@ pubnub.addListener({
                 drone.tiltRight({ steps: STEPS });
                 break;
 
+            case "turn_left":
+                console.log('drone:', message.message.command);
+                drone.turnLeft({ steps: STEPS });
+                break;
+
+            case "turn_right":
+                console.log('drone:', message.message.command);
+                drone.turnRight({ steps: STEPS });
+                break;
+
+            case "ascend":
+                console.log('drone:', message.message.command);
+                drone.up({ steps: STEPS * 2.5 });
+                break;
+
+            case "descend":
+                console.log('drone:', message.message.command);
+                drone.down({ steps: STEPS * 2.5 });
+                break;
+
             case undefined:
                 console.log('undefined drone command:', message.message.command);
                 break;

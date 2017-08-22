@@ -76,263 +76,124 @@ function about(intent, session, callback) {
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
-// --------------- Drone control functions -----------------------
+// --------------- Drone control command relay -----------------------
 
 // TODO
 // Handle non-response (no listener)
+// log objects
+// up, down, turn left, turn right
+// DONE
 // Create common drone control function instead of copy/paste (seems not to work)
 
-function droneSetup(intent, session, callback) {
-    console.log("drone command: setup")
+function droneCommand(droneCommand, cardTitle, speechOutput, shouldEndSession, callback) {
 
-    const cardTitle = intent.name;
-    const shouldEndSession = false;
-    let speechOutput = "Drone setup complete.";
-
-    //callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-
-    var commandMessage = {
-        "command" : "setup",
+    console.log("drone command: ", droneCommand)
+ 
+    const commandMessage = {
+        "command" : droneCommand,
     };
 
-    pubnub.publish(
-    {
+    pubnub.publish({
         channel: droneChannel,
         message: commandMessage
     },
     function(status, response) {
         if (status.error) {
-            console.log("ERROR drone command: setup - publishing failed");
+            console.log(`ERRROR drone command: ${droneCommand} - ${response} -- ${status}`);
             callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
         } else {
-            console.log("drone command: setup - publishing succeeded", response);
+            console.log(`SUCCESS drone command: ${droneCommand} - ${response} -- ${status}`);
             callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
         }
     });
+}
+
+// --------------- Drone control functions -----------------------
+
+function droneSetup(intent, session, callback) {
+    const cardTitle = intent.name;
+    const speechOutput = "Drone setup complete.";
+    const shouldEndSession = false;
+    droneCommand("setup", cardTitle, speechOutput, shouldEndSession, callback);
 }
 
 function droneTakeoff(intent, session, callback) {
-    console.log("drone command: takeoff")
-
     const cardTitle = intent.name;
+    const speechOutput = "Drone is taking off.";
     const shouldEndSession = false;
-    let speechOutput = "Drone has taken off.";
-
-    var commandMessage = {
-        "command" : "takeoff",
-    };
-
-    pubnub.publish(
-    {
-        channel: droneChannel,
-        message: commandMessage
-    },
-    function(status, response) {
-        if (status.error) {
-            console.log("ERROR drone command: takeoff - publishing failed");
-            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
-        } else {
-            console.log("drone command: takeoff - publishing succeeded", response);
-            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-        }
-    });
-
+    droneCommand("takeoff", cardTitle, speechOutput, shouldEndSession, callback);
 }
 
 function droneLand(intent, session, callback) {
-    console.log("drone command: land")
-
     const cardTitle = intent.name;
+    const speechOutput = "Drone is landing.";
     const shouldEndSession = false;
-    let speechOutput = "Drone has landed.";
-
-    var commandMessage = {
-        "command" : "land",
-    };
-
-    pubnub.publish(
-    {
-        channel: droneChannel,
-        message: commandMessage
-    },
-    function(status, response) {
-        if (status.error) {
-            console.log("ERROR drone command: land - publishing failed");
-            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
-        } else {
-            console.log("drone command: land - publishing succeeded", response);
-            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-        }
-    });
+    droneCommand("land", cardTitle, speechOutput, shouldEndSession, callback);
 }
 
 function droneForward(intent, session, callback) {
-    console.log("drone command: forward")
-
     const cardTitle = intent.name;
+    const speechOutput = "Drone is moving forward.";
     const shouldEndSession = false;
-    let speechOutput = "Drone has moved forward.";
-
-    var commandMessage = {
-        "command" : "forward",
-    };
-
-    pubnub.publish(
-    {
-        channel: droneChannel,
-        message: commandMessage
-    },
-    function(status, response) {
-        if (status.error) {
-            console.log("ERROR drone command: forward - publishing failed");
-            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
-        } else {
-            console.log("drone command: forward - publishing succeeded", response);
-            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-        }
-    });
+    droneCommand("forward", cardTitle, speechOutput, shouldEndSession, callback);
 }
 
 function droneBackward(intent, session, callback) {
-    console.log("drone command: backward")
-
     const cardTitle = intent.name;
+    const speechOutput = "Drone is moving backward.";
     const shouldEndSession = false;
-    let speechOutput = "Drone has moved backward.";
-
-    var commandMessage = {
-        "command" : "backward",
-    };
-
-    pubnub.publish(
-    {
-        channel: droneChannel,
-        message: commandMessage
-    },
-    function(status, response) {
-        if (status.error) {
-            console.log("ERROR drone command: backward - publishing failed");
-            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
-        } else {
-            console.log("drone command: backward - publishing succeeded", response);
-            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-        }
-    });
+    droneCommand("backward", cardTitle, speechOutput, shouldEndSession, callback);
 }
 
-function droneLeft(intent, session, callback) {
-    console.log("drone command: left")
-
+function droneMoveLeft(intent, session, callback) {
     const cardTitle = intent.name;
+    const speechOutput = "Drone is moving left.";
     const shouldEndSession = false;
-    let speechOutput = "Drone has moved left.";
-
-    var commandMessage = {
-        "command" : "left",
-    };
-
-    pubnub.publish(
-    {
-        channel: droneChannel,
-        message: commandMessage
-    },
-    function(status, response) {
-        if (status.error) {
-            console.log("ERROR drone command: left - publishing failed");
-            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
-        } else {
-            console.log("drone command: left - publishing succeeded", response);
-            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-        }
-    });
+    droneCommand("left", cardTitle, speechOutput, shouldEndSession, callback);
 }
 
-function droneRight(intent, session, callback) {
-    console.log("drone command: right")
-
+function droneMoveRight(intent, session, callback) {
     const cardTitle = intent.name;
+    const speechOutput = "Drone is moving right.";
     const shouldEndSession = false;
-    let speechOutput = "Drone has moved right.";
+    droneCommand("right", cardTitle, speechOutput, shouldEndSession, callback);
+}
 
-    var commandMessage = {
-        "command" : "right",
-    };
+function droneTurnLeft(intent, session, callback) {
+    const cardTitle = intent.name;
+    const speechOutput = "Drone is turning left.";
+    const shouldEndSession = false;
+    droneCommand("turn_left", cardTitle, speechOutput, shouldEndSession, callback);
+}
 
-    pubnub.publish(
-    {
-        channel: droneChannel,
-        message: commandMessage
-    },
-    function(status, response) {
-        if (status.error) {
-            console.log("ERROR drone command: right - publishing failed");
-            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
-        } else {
-            console.log("drone command: right - publishing succeeded", response);
-            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-        }
-    });
+function droneTurnRight(intent, session, callback) {
+    const cardTitle = intent.name;
+    const speechOutput = "Drone is turning right.";
+    const shouldEndSession = false;
+    droneCommand("turn_right", cardTitle, speechOutput, shouldEndSession, callback);
+}
+
+function droneAscend(intent, session, callback) {
+    const cardTitle = intent.name;
+    const speechOutput = "Drone is going up.";
+    const shouldEndSession = false;
+    droneCommand("ascend", cardTitle, speechOutput, shouldEndSession, callback);
+}
+
+function droneDescend(intent, session, callback) {
+    const cardTitle = intent.name;
+    const speechOutput = "Drone is going down.";
+    const shouldEndSession = false;
+    droneCommand("descend", cardTitle, speechOutput, shouldEndSession, callback);
 }
 
 function droneShutdown(intent, session, callback) {
-    
-    console.log("drone command: shutdown")
-
     const cardTitle = intent.name;
-    let repromptText = '';
-    const shouldEndSession = true;
-    let speechOutput = "Drone has been shutdown. Exiting skill.";
-
-    var commandMessage = {
-        "command" : "shutdown",
-    };
-
-    pubnub.publish(
-    {
-        channel: droneChannel,
-        message: commandMessage
-    },
-    function(status, response) {
-        if (status.error) {
-            console.log("ERROR drone command: shutdown - publishing failed");
-            callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
-        } else {
-            console.log("drone command: shutdown - publishing succeeded", response);
-            callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-        }
-    });
+    const speechOutput = "Drone has been shutdown. Exiting skill.";
+    const shouldEndSession = false;
+    droneCommand("shutdown", cardTitle, speechOutput, shouldEndSession, callback);
 }
-
-
-
-function droneCommand(command, cardTitle, speechOutput, shouldEndSession) {
-    
-    callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-    
-    /*
-
-    var commandMessage = {
-        "command" : command,
-    };
-
-    pubnub.publish(
-    {
-        channel: droneChannel,
-        message: commandMessage
-    },
-    function(status, response) {
-        if (status.error) {
-            //callback({}, buildSpeechletResponse(cardTitle, "Could not send command to drone", null, shouldEndSession));
-            console.log( command + ": FAILED!", e);
-        } else {
-            console.log( command + ": SUCCESS!", e );
-            //callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-        }
-    });
-
-    */
-}
-         
+        
 // --------------- Events -----------------------
 
 /**
@@ -375,9 +236,17 @@ function onIntent(intentRequest, session, callback) {
     } else if (intentName === 'BackwardIntent') {
         droneBackward(intent, session, callback);
     } else if (intentName === 'LeftIntent') {
-        droneLeft(intent, session, callback);
+        droneMoveLeft(intent, session, callback);
     } else if (intentName === 'RightIntent') {
-        droneRight(intent, session, callback);
+        droneMoveRight(intent, session, callback);
+    } else if (intentName === 'TurnLeftIntent') {
+        droneTurnLeft(intent, session, callback);
+    } else if (intentName === 'TurnRightIntent') {
+        droneTurnRight(intent, session, callback);
+    } else if (intentName === 'AscendIntent') {
+        droneAscend(intent, session, callback);
+    } else if (intentName === 'DescendIntent') {
+        droneDescend(intent, session, callback);
     } else if (intentName === 'AboutIntent') {
         about(intent, session, callback);
     } else if (intentName === 'AMAZON.HelpIntent') {

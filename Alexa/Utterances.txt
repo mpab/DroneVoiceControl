@@ -28,6 +28,24 @@ RightIntent right
 RightIntent move right
 RightIntent go right
 
+TurnLeftIntent counterclockwise
+TurnLeftIntent turn left
+
+TurnRightIntent clockwise
+TurnRightIntent turn right
+
+AscendIntent ascend
+AscendIntent up
+AscendIntent go up
+AscendIntent higher
+AscendIntent go higher
+
+DescendIntent descend
+DescendIntent down
+DescendIntent go down
+DescendIntent lower
+DescendIntent go lower
+
 ShutdownIntent power off
 ShutdownIntent power down
 ShutdownIntent shutdown

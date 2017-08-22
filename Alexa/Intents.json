@@ -29,6 +29,22 @@
       "slots": []
     },
     {
+      "intent": "TurnLeftIntent",
+      "slots": []
+    },
+    {
+      "intent": "TurnRightIntent",
+      "slots": []
+    },
+    {
+      "intent": "AscendIntent",
+      "slots": []
+    },
+    {
+      "intent": "DescendIntent",
+      "slots": []
+    },
+    {
       "intent": "ShutdownIntent",
       "slots": []
     },
