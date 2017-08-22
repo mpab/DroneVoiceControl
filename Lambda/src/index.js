@@ -190,7 +190,7 @@ function droneDescend(intent, session, callback) {
 function droneShutdown(intent, session, callback) {
     const cardTitle = intent.name;
     const speechOutput = "Drone has been shutdown. Exiting skill.";
-    const shouldEndSession = false;
+    const shouldEndSession = true;
     droneCommand("shutdown", cardTitle, speechOutput, shouldEndSession, callback);
 }
         
