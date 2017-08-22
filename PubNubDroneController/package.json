@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mpab/DroneVoiceControl/README.md",
   "dependencies": {
-    "pubnub": "^4.14.0"
+    "pubnub": "^4.14.0",
+    "rolling-spider": "^1.7.0"
   }
 }
