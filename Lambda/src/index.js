@@ -54,7 +54,7 @@ function getWelcomeResponse(callback) {
     const speechOutput = 'Welcome to drone control.';
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
-    const repromptText = 'Control the drone by saying setup, takeoff, land, or shutdown';
+    const repromptText = 'Control the drone by saying takeoff, left, right, land or shutdown';
     const shouldEndSession = false;
 
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
